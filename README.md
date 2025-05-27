@@ -30,3 +30,13 @@ to the sponsor plus the contract call:
 * for improving the user experience, the contract-deploy emits 2 events (sponsored-call + sponsored-call-response if the token transfer is successfull and sponsored-call + sponsored-transfer-response on token transfer failure)
 * the user contract-call must be execute only if the transfer is successfull
 * the sponsored-call print must be equal to the arguments of the user contract-call
+
+The transaction is signed and sent to the sponsoring server (same HTTP API of stacks-core/hiro).
+
+The sponsoring server validates the transaction, sponsor it and broadcast to the network.
+
+## Validation
+
+* the only "dynamic" part of the contract-deploy must be the contract-call? arguments (in the previous example `'ST3FANAWN9R8BZRFGG0F9XSM76666GANN2RZ0JWH7.crappy crappy-double u17`) and the amount of tokens to transfer (unless obviously the sponsoring service wants to apply a fixed fee for everything)
+* the transaction must be correctly signed
+* the amount of tokens should be compared with the required STX for the specific transaction (the estimate endpoint could be used)
