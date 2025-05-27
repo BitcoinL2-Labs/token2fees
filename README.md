@@ -40,3 +40,11 @@ The sponsoring server validates the transaction, sponsor it and broadcast to the
 * the only "dynamic" part of the contract-deploy must be the contract-call? arguments (in the previous example `'ST3FANAWN9R8BZRFGG0F9XSM76666GANN2RZ0JWH7.crappy crappy-double u17`) and the amount of tokens to transfer (unless obviously the sponsoring service wants to apply a fixed fee for everything)
 * the transaction must be correctly signed
 * the amount of tokens should be compared with the required STX for the specific transaction (the estimate endpoint could be used)
+
+## Testing
+
+* generateStacksKey.js can be used for generating a new stacks private key (it will be saved in private.key)
+* deployCrappyTokenContract.js will deploy the "CrappyCoin" contract (using the private.key file)
+* with mintCrappyTokens.js you can add tokens to your address
+* sponsorServer.js will run a sponsoring service on localhost:3000
+* requestSponsorship.js can be used to send contract-deploy to the sponsor server
