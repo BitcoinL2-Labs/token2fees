@@ -17,6 +17,10 @@ app.post('/v2/transactions', async (req, res) => {
 
         const tx = deserializeTransaction(txBuffer);
 
+        // TODO validate the signature
+
+        // TODO parse the content and validate it
+
         console.log('Contract name:', tx.payload.contractName);
         console.log('Contract body:', tx.payload.codeBody);
         console.log('Contract is sponsored:', tx.auth.authType == AuthType.Sponsored);
