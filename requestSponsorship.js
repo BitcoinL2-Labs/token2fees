@@ -17,7 +17,7 @@ const nonceSuffix = nonce.toString().padStart(3, '0');
 const CONTRACT_NAME = 'sponsor-my-call-' + nonceSuffix;
 
 const CONTRACT_CODE = `
-(print { sponsored-call: "'STDZNQMRXTQZ6SRQQX61DZJKJV0KSRGHFETQQGZ5.crappy-token transfer 'ST3FANAWN9R8BZRFGG0F9XSM76666GANN2RZ0JWH7 u3" })
+(print { sponsored-call: "'ST3FANAWN9R8BZRFGG0F9XSM76666GANN2RZ0JWH7.crappy crappy-double u17" })
 (match (contract-call? 'STDZNQMRXTQZ6SRQQX61DZJKJV0KSRGHFETQQGZ5.crappy-token transfer
     'ST3FANAWN9R8BZRFGG0F9XSM76666GANN2RZ0JWH7 u1
 )
