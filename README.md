@@ -6,7 +6,7 @@ Only contract-calls are supported for now.
 
 ## Logic
 
-The user craft a contract-deploy transaction (yes a deploy not a call) with the goal of having an atomic send of the tokens
+The user crafts a contract-deploy transaction (yes a deploy not a call) with the goal of having an atomic send of the tokens
 to the sponsor plus the contract call:
 
 ```
@@ -27,6 +27,6 @@ to the sponsor plus the contract call:
 )
 ```
 
-* for improving the user experience, the contract-deplpy emits 2 events (sponsored-call + sponsored-call-response if the token transfer is successfull and sponsored-call + sponsored-transfer-response on token transfer failure)
+* for improving the user experience, the contract-deploy emits 2 events (sponsored-call + sponsored-call-response if the token transfer is successfull and sponsored-call + sponsored-transfer-response on token transfer failure)
 * the user contract-call must be execute only if the transfer is successfull
 * the sponsored-call print must be equal to the arguments of the user contract-call
