@@ -1,13 +1,15 @@
 import express from 'express';
-import { AuthType, deserializeTransaction, sponsorTransaction, broadcastTransaction } from '@stacks/transactions';
+import { AuthType, deserializeTransaction, sponsorTransaction, broadcastTransaction, fetchCallReadOnlyFunction, principalCV, createStacksPublicKey, publicKeyToAddress, getAddressFromPrivateKey, createAddress } from '@stacks/transactions';
+import { c32address } from 'c32check';
 import { verifySignature } from '@stacks/encryption';
-import { STACKS_TESTNET } from '@stacks/network';
+import { AddressVersion, STACKS_TESTNET } from '@stacks/network';
 import fs from 'fs';
 
 const app = express();
 const port = 3000;
 
 const privateKeyHex = fs.readFileSync('private.key', 'utf-8').trim();
+const serverAddress = getAddressFromPrivateKey(privateKeyHex, STACKS_TESTNET);
 
 app.use(express.raw({ type: '*/*' }));
 
@@ -17,9 +19,32 @@ app.post('/v2/transactions', async (req, res) => {
 
         const tx = deserializeTransaction(txBuffer);
 
+        const senderAddress = c32address(AddressVersion.TestnetSingleSig, tx.auth.spendingCondition.signer);
+
+        console.log(senderAddress);
+
         // TODO validate the signature
 
         // TODO parse the content and validate it
+
+        // ensure the amount of available token is enough
+        const responseGetBalance = await fetchCallReadOnlyFunction({
+            contractAddress: 'STDZNQMRXTQZ6SRQQX61DZJKJV0KSRGHFETQQGZ5',
+            contractName: 'crappy-token',
+            functionName: 'get-balance',
+            functionArgs: [principalCV(senderAddress)],
+            network: STACKS_TESTNET,
+            senderAddress: serverAddress
+        });
+
+        console.log(responseGetBalance);
+
+        // naive check
+        if (responseGetBalance.value < 10)
+        {
+            res.status(400).json({ error: 'Not enough funds!' });
+            return;
+        }
 
         console.log('Contract name:', tx.payload.contractName);
         console.log('Contract body:', tx.payload.codeBody);
