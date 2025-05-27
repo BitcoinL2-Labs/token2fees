@@ -8,10 +8,6 @@ const stacksAddress = getAddressFromPrivateKey(privateKeyHex, STACKS_TESTNET);
 
 const CONTRACT_NAME = 'crappy-token';
 
-const contractCode = fs.readFileSync('contracts/crappy-token.clar', { encoding: 'utf8', flag: 'r' });
-
-console.log(contractCode);
-
 const CONTRACT_CODE = `
 ;; CrappyCoin SIP-10 Token
 
