@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 import { makeContractDeploy, Pc, fetchNonce, getAddressFromPrivateKey } from '@stacks/transactions';
 import { STACKS_TESTNET } from '@stacks/network';
 
-const server_url = process.argv[3];
+const server_url = process.argv[2];
 
 console.log('sending contract call to', server_url, '...')
 
@@ -16,16 +16,15 @@ const nonceSuffix = nonce.toString().padStart(3, '0');
 
 const CONTRACT_NAME = 'sponsor-my-call-' + nonceSuffix;
 
-const contractCall = process.argv[2];
-const escapedContractCall = contractCall.replace('"', '\"');
-
 const CONTRACT_CODE = `
-(print { sponsored-call: "${escapedContractCall}" })
+(print { sponsored-call: "'ST3FANAWN9R8BZRFGG0F9XSM76666GANN2RZ0JWH7.crappy crappy-double u17" })
 (match (contract-call? 'STDZNQMRXTQZ6SRQQX61DZJKJV0KSRGHFETQQGZ5.crappy-token transfer
     'ST3FANAWN9R8BZRFGG0F9XSM76666GANN2RZ0JWH7 u1
 )
     success (begin
-        (print { sponsored-call-response: (contract-call? ${contractCall}) })
+        (print { sponsored-call-response: (contract-call? 'ST3FANAWN9R8BZRFGG0F9XSM76666GANN2RZ0JWH7.crappy
+            crappy-double u17
+        ) })
         (ok true)
     )
     error (begin
