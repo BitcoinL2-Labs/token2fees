@@ -12,5 +12,5 @@ const result = await response.json();
 if (result.error) {
     console.error('Error:', result.error);
 } else {
-    console.log('Balance:', BigInt(result.balance));
+    console.log('Balance:', Number(BigInt(result.balance)) / Number(1000 * 1000));
 }
