@@ -72,5 +72,5 @@ app.post('/v2/transactions', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server listening at http://localhost:${port}`);
+    console.log(`Sponsor Server listening on port ${port}`);
 });
