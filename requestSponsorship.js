@@ -22,7 +22,7 @@ const escapedContractCall = contractCall.replace('"', '\"');
 const CONTRACT_CODE = `
 (print { sponsored-call: "${escapedContractCall}" })
 (match (contract-call? 'STDZNQMRXTQZ6SRQQX61DZJKJV0KSRGHFETQQGZ5.crappy-token transfer
-    'ST3FANAWN9R8BZRFGG0F9XSM76666GANN2RZ0JWH7 u1
+    'STDZNQMRXTQZ6SRQQX61DZJKJV0KSRGHFETQQGZ5 u1
 )
     success (begin
         (print { sponsored-call-response: (contract-call? ${contractCall}) })
