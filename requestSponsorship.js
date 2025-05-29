@@ -30,7 +30,7 @@ const CONTRACT_CODE = `
     )
     error (begin
         (print { sponsored-transfer-response: error })
-        (ok true)
+        (ok false)
     )
 )
         `;
