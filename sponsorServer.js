@@ -40,7 +40,7 @@ app.post('/v2/transactions', async (req, res) => {
         console.log(responseGetBalance);
 
         // naive check
-        if (responseGetBalance.value < 10)
+        if (responseGetBalance.value < 1)
         {
             res.status(400).json({ error: 'Not enough funds!' });
             return;
