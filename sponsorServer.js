@@ -4,6 +4,12 @@ import { c32address } from 'c32check';
 import { verifySignature } from '@stacks/encryption';
 import { AddressVersion, STACKS_TESTNET } from '@stacks/network';
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 const port = 3000;
@@ -13,9 +19,17 @@ const serverAddress = getAddressFromPrivateKey(privateKeyHex, STACKS_TESTNET);
 
 app.use(express.raw({ type: '*/*' }));
 
+app.use(express.static(path.join(__dirname, 'dist')));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
 app.post('/v2/transactions', async (req, res) => {
     try {
         const txBuffer = req.body;
+
+        console.log('received', txBuffer);
 
         const tx = deserializeTransaction(txBuffer);
 
@@ -40,8 +54,7 @@ app.post('/v2/transactions', async (req, res) => {
         console.log(responseGetBalance);
 
         // naive check
-        if (responseGetBalance.value < 1)
-        {
+        if (responseGetBalance.value < 1) {
             res.status(400).json({ error: 'Not enough funds!' });
             return;
         }
